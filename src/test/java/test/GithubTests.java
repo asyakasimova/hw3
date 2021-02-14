@@ -1,7 +1,9 @@
 package test;
 
 import com.codeborne.selenide.CollectionCondition;
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.CollectionCondition.*;
@@ -11,6 +13,10 @@ import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
 public class GithubTests {
+    @BeforeAll
+    static void setup() {
+        Configuration.startMaximized = true;
+    }
 
     @Test
     void checkSelenideGithubTest() {
@@ -23,10 +29,10 @@ public class GithubTests {
         $(byText("Wiki")).click();
         $("#user-content-welcome-to-the-selenide-wiki").shouldBe(visible);
         // Убедитесь, что в списке страниц (Pages) есть страница SoftAssertions
-        $$(".m-0.p-0 li").shouldHave(itemWithText("SoftAssertions"));
+        $$(".internal").shouldHave(itemWithText("Soft assertions"));
 
         // Откройте страницу SoftAssertions, проверьте что внутри есть пример кода для JUnit5
-        $(byText("SoftAssertions")).click();
+        $(byText("Soft assertions")).click();
         $("#wiki-wrapper").shouldHave(text("SoftAssertions"));
         $$("ol").first().shouldHave(text("JUnit5 extension"));
     }
